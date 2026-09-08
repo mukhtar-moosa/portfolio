@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  output: "export",
   images: {
-    // Add remote image domains here if you host project/profile images externally,
-    // e.g. { remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }] }
-    remotePatterns: [],
+    unoptimized: true,
   },
 };
 
