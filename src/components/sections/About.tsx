@@ -3,6 +3,7 @@ import { siteConfig } from "@/data/site";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { getAssetPath } from "@/lib/utils";
 
 export function About() {
   return (
@@ -36,7 +37,7 @@ export function About() {
           <div className="md:col-span-2">
             <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-border bg-surface">
               <Image
-                src={siteConfig.profileImage}
+                src={getAssetPath(siteConfig.profileImage)}
                 alt={`${siteConfig.name} profile photo`}
                 fill
                 className="object-cover"

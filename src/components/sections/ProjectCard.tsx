@@ -3,6 +3,7 @@ import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/types";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { getAssetPath } from "@/lib/utils";
 
 interface ProjectCardProps {
   project: Project;
@@ -14,7 +15,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {/* Project image */}
       <div className="relative aspect-video w-full overflow-hidden border-b border-border bg-background">
         <Image
-          src={project.image}
+          src={getAssetPath(project.image)}
           alt={project.title}
           fill
           className="object-cover"

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { getAssetPath } from "@/lib/utils";
 
 export function Certifications() {
   return (
@@ -53,7 +54,8 @@ export function Certifications() {
 
                   {certification.credentialUrl && (
                     <Button
-                      href={certification.credentialUrl}
+                      href={getAssetPath(certification.credentialUrl)}
+                      external
                       target="_blank"
                       rel="noopener noreferrer"
                       variant="secondary"

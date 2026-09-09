@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { siteConfig } from "@/data/site";
 import { socialLinks } from "@/data/social";
@@ -17,13 +18,13 @@ export function Footer() {
 
           <nav className="flex flex-wrap gap-x-6 gap-y-2">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="font-mono text-xs text-muted transition-colors hover:text-foreground"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 

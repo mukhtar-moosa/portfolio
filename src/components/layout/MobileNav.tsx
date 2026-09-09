@@ -1,10 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Download } from "lucide-react";
 import { navLinks } from "@/data/navigation";
 import { siteConfig } from "@/data/site";
 import { Button } from "@/components/ui/Button";
+import { cn, getAssetPath } from "@/lib/utils";
 
 interface MobileNavProps {
   open: boolean;
@@ -12,6 +15,8 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ open, onNavigate }: MobileNavProps) {
+  const pathname = usePathname();
+
   return (
     <AnimatePresence>
       {open && (
@@ -23,18 +28,30 @@ export function MobileNav({ open, onNavigate }: MobileNavProps) {
           className="overflow-hidden border-b border-border bg-background md:hidden"
         >
           <nav className="flex flex-col gap-1 px-6 py-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={onNavigate}
-                className="rounded-md px-3 py-2.5 font-mono text-sm text-muted transition-colors hover:bg-surface hover:text-foreground"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname?.startsWith(link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={onNavigate}
+                  className={cn(
+                    "rounded-md px-3 py-2.5 font-mono text-sm transition-colors",
+                    isActive
+                      ? "bg-surface text-foreground font-medium border border-border"
+                      : "text-muted hover:bg-surface hover:text-foreground"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <Button
-              href={siteConfig.resumeUrl}
+              href={getAssetPath(siteConfig.resumeUrl)}
               external
               variant="secondary"
               size="sm"

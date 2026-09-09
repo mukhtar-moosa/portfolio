@@ -52,13 +52,21 @@ export function Button({
   if ("href" in props && props.href) {
     const { href, external, ...rest } = props as ButtonAsLink;
 
-    if (external || href.startsWith("http") || href.startsWith("mailto:")) {
+    const isExternal =
+      external ||
+      href.startsWith("http") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("tel:") ||
+      href.toLowerCase().endsWith(".pdf") ||
+      href.toLowerCase().includes(".pdf");
+
+    if (isExternal) {
       return (
         <a
           href={href}
           className={styles}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener noreferrer" : undefined}
+          target={external || href.toLowerCase().includes(".pdf") ? "_blank" : undefined}
+          rel={external || href.toLowerCase().includes(".pdf") ? "noopener noreferrer" : undefined}
           {...rest}
         >
           {props.children}

@@ -24,7 +24,11 @@ export const siteConfig = {
     "Open to Part-Time, Internship, Freelance & Collaboration Opportunities",
 
   // Used for canonical URLs and Open Graph / Twitter metadata.
-  url: "http://localhost:3000",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NODE_ENV === "production"
+      ? "https://mukhtar-moosa.github.io/portfolio"
+      : "http://localhost:3000"),
   ogImage: "/images/og-image.png",
 
   // Public asset paths.

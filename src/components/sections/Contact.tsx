@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { siteConfig } from "@/data/site";
 import { socialLinks } from "@/data/social";
+import { getAssetPath } from "@/lib/utils";
 
 export function Contact() {
   // ==============================
@@ -61,7 +62,7 @@ export function Contact() {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(getAssetPath("/api/contact"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Object.fromEntries(formData.entries())),

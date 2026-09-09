@@ -2,17 +2,20 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Download, Menu, X } from "lucide-react";
 import { navLinks } from "@/data/navigation";
 import { siteConfig } from "@/data/site";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { MobileNav } from "@/components/layout/MobileNav";
-import { cn } from "@/lib/utils";
+import { cn, getAssetPath } from "@/lib/utils";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -32,35 +35,47 @@ export function Navbar() {
     >
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <a
+          <Link
             href="/"
             aria-label="MukhtarAI home"
             className="flex items-center"
           >
             <Image
-              src="/images/mukhtar-ai-logo.svg"
+              src={getAssetPath("/images/mukhtar-ai-logo.svg")}
               alt="MukhtarAI"
               width={174}
               height={44}
               priority
               className="h-9 w-auto"
             />
-          </a>
+          </Link>
 
           <nav className="hidden items-center gap-1 md:flex">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-md px-3.5 py-2 font-mono text-sm text-muted transition-colors hover:text-foreground"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname?.startsWith(link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "rounded-md px-3.5 py-2 font-mono text-sm transition-colors",
+                    isActive
+                      ? "bg-surface text-foreground font-medium border border-border"
+                      : "text-muted hover:text-foreground hover:bg-surface/50"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="hidden md:block">
-            <Button href={siteConfig.resumeUrl} external variant="secondary" size="sm">
+            <Button href={getAssetPath(siteConfig.resumeUrl)} external variant="secondary" size="sm">
               <Download size={16} />
               Resume
             </Button>
